@@ -1,97 +1,107 @@
--- if object_id(N'newdb', N'U') is null
--- begin
---     create table newdb
+-- IF OBJECT_ID(N'newdb', N'U') IS NULL
+-- BEGIN
+--     CREATE TABLE newdb
 --     (
---         id int IDENTITY(1,1),
+--         id INT IDENTITY(1, 1),
 --         name VARCHAR(50)
 --     )
--- end
+-- END
 -- ELSE
 -- BEGIN
---     insert into newdb
---         (name)
---     values('Boyan')
--- end
--- select *
--- from newdb
+--     INSERT INTO newdb
+--     (
+--         name
+--     )
+--     VALUES
+--     ('Boyan')
+-- END
+-- SELECT *
+-- FROM newdb
 
--- insert into [dbo].[newdb]
---     ([name])
--- select [name]
--- from [dbo].[county]
+-- INSERT INTO [dbo].[newdb]
+-- (
+--     [name]
+-- )
+-- SELECT [name]
+-- FROM [dbo].[county]
 
 
--- truncate TABLE [dbo].[newdb];
--- DBCC CHECKIDENT ('newdb', RESEED, 0);
--- select *
--- from [dbo].[newdb];
+-- TRUNCATE TABLE [dbo].[newdb];
+-- DBCC CHECKIDENT('newdb', RESEED, 0);
+-- SELECT *
+-- FROM [dbo].[newdb];
 
--- insert into newdb
---     (name)
--- select name
--- from county
--- insert into [dbo].[newdb]
---     (name)
--- select name
--- from county
--- where LEFT(name, 1) = 'A'
+-- INSERT INTO newdb
+-- (
+--     name
+-- )
+-- SELECT name
+-- FROM county
+-- INSERT INTO [dbo].[newdb]
+-- (
+--     name
+-- )
+-- SELECT name
+-- FROM county
+-- WHERE LEFT(name, 1) = 'A'
 
--- select *
--- from newdb
--- where name  not like ('%County%');
+-- SELECT *
+-- FROM newdb
+-- WHERE name NOT LIKE ('%County%');
 
--- declare @name varchar(10);
--- set @name = 'Boyan';
--- select @name as name;
+-- DECLARE @name VARCHAR(10);
+-- SET @name = 'Boyan';
+-- SELECT @name AS name;
 
--- TRUNCATE table newdb;
+-- TRUNCATE TABLE newdb;
 
--- insert into newdb
--- select [name]
--- FROM[dbo].[county];
+-- INSERT INTO newdb
+-- SELECT [name]
+-- FROM [dbo].[county];
 
--- alter table [dbo].[newdb] alter COLUMN [name] varchar(150);
--- exec sp_rename 'dbo.newdb.name', 'new_name', 'COLUMN';
--- alter table [dbo].[newdb]
--- alter column[new_name]
--- varchar(255)
--- NOT NULL;
--- select *
--- from [dbo].[newdb];
+-- ALTER TABLE [dbo].[newdb] ALTER COLUMN [name] VARCHAR(150);
+-- EXEC sp_rename 'dbo.newdb.name', 'new_name', 'COLUMN';
+-- ALTER TABLE [dbo].[newdb] ALTER COLUMN [new_name] VARCHAR(255) NOT NULL;
+-- SELECT *
+-- FROM [dbo].[newdb];
 
--- alter table [dbo].[newdb]
--- add CONSTRAINT unique_new_name unique([new_name]);
+-- ALTER TABLE [dbo].[newdb]
+-- ADD CONSTRAINT unique_new_name
+--     UNIQUE ([new_name]);
 
--- SELECT new_name, COUNT(*) AS count
+-- SELECT new_name,
+--        COUNT(*) AS count
 -- FROM [dbo].[newdb]
 -- GROUP BY new_name
 -- HAVING COUNT(*) > 1;
 
 
--- exec sp_rename 'dbo.newdb.new_name', 'name', 'COLUMN';
+-- EXEC sp_rename 'dbo.newdb.new_name', 'name', 'COLUMN';
 
 
--- if not exists
---     (select *
--- from sys.tables
--- where name in ('professors', 'organizations', 'universities') and type = 'U')
-
+-- IF NOT EXISTS
+-- (
+--     SELECT *
+--     FROM sys.tables
+--     WHERE name IN ( 'professors', 'organizations', 'universities' )
+--           AND type = 'U'
+-- )
 -- BEGIN
 
---     create table professors
+--     CREATE TABLE professors
 --     (
 --         first_name VARCHAR(50),
 --         lastname VARCHAR(50),
 --         university_shortname VARCHAR(10)
 --     );
 
---     create table organizations
+--     CREATE TABLE organizations
 --     (
 --         organization_sector VARCHAR(50),
 --         organization VARCHAR(50),
 --     );
 
---     create table universities
+--     CREATE TABLE universities
 --     (
 --         university VARCHAR(40),
 --         university_shortname VARCHAR(10),
@@ -99,62 +109,65 @@
 --     )
 -- END
 
--- EXEC SP_RENAME '[DBO].[UNIVERSITIES].[UNIVERSITY_SHORTNAME]', 'ID', 'COLUMN';
+-- EXEC SP_RENAME '[DBO].[UNIVERSITIES].[UNIVERSITY_SHORTNAME]',
+--                'ID',
+--                'COLUMN';
 
---  ALTER TABLE [DBO].[UNIVERSITIES] DROP COLUMN ID;
-
---  ALTER TABLE [DBO].[UNIVERSITIES] 
---  ADD ID INT IDENTITY(1,1) NOT NULL PRIMARY KEY;
-
--- ALTER TABLE [DBO].[UNIVERSITIES]
--- ALTER COLUMN [ID] INT;
+-- ALTER TABLE [DBO].[UNIVERSITIES] DROP COLUMN ID;
 
 -- ALTER TABLE [DBO].[UNIVERSITIES]
--- ADD CONSTRAINT UNIVERSITIES_PK	PRIMARY KEY ([ID]); 
+-- ADD ID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY;
 
-IF NOT EXISTS
-(
-    SELECT *
-    FROM sys.tables
-    WHERE name IN ( 'new_table' )
-          AND TYPE = 'U'
-)
-BEGIN
-    CREATE TABLE new_table
-    (
-        id VARCHAR(5),
-        name VARCHAR(20)
-    )
-END
+-- ALTER TABLE [DBO].[UNIVERSITIES] ALTER COLUMN [ID] INT;
 
---Cannot define PRIMARY KEY constraint on nullable column in table 'new_table'.
---We can solve it by droping the column and add new one predefined column
--- ALTER TABLE new_table
--- ALTER COLUMN id INT;
+-- ALTER TABLE [DBO].[UNIVERSITIES]
+-- ADD CONSTRAINT UNIVERSITIES_PK
+--     PRIMARY KEY ([ID]);
 
--- ALTER TABLE new_table
--- ADD CONSTRAINT new_table_primary PRIMARY KEY(id);
+-- IF NOT EXISTS
+-- (
+--     SELECT *
+--     FROM sys.tables
+--     WHERE name IN ( 'new_table' )
+--           AND TYPE = 'U'
+-- )
+-- BEGIN
+--     CREATE TABLE new_table
+--     (
+--         id VARCHAR(5),
+--         name VARCHAR(20)
+--     )
+-- END
 
--- alter table new_table
--- drop COLUMN id;
+-- -- Cannot define PRIMARY KEY constraint on nullable column in table 'new_table'.
+-- -- We can solve it by droping the column and add new one predefined column
+-- ALTER TABLE new_table ALTER COLUMN id INT;
 
--- alter table new_table
--- add id int IDENTITY(1,1) not null primary key;
+-- ALTER TABLE new_table ADD CONSTRAINT new_table_primary PRIMARY KEY (id);
 
--- insert into new_table(name) VALUES('Boyan')
+-- ALTER TABLE new_table DROP COLUMN id;
 
-INSERT INTO new_table
-VALUES
-('Boyan'),
-('Pencho'),
-('Stamat'),
-('Boyan'),
-('Stamat');
+-- ALTER TABLE new_table ADD id INT IDENTITY(1, 1) NOT NULL PRIMARY KEY;
+
+-- INSERT INTO new_table
+-- (
+--     name
+-- )
+-- VALUES
+-- ('Boyan')
+
+-- INSERT INTO new_table
+-- VALUES
+-- ('Boyan'),
+-- ('Pencho'),
+-- ('Stamat'),
+-- ('Boyan'),
+-- ('Stamat');
 
 
 
-SELECT name,
-       COUNT(*) AS COUNT
-FROM new_table
-GROUP BY name
-HAVING COUNT(*) > 1;
+-- SELECT name,
+--        COUNT(*) AS COUNT
+-- FROM new_table
+-- GROUP BY name
+-- HAVING COUNT(*) > 1;
