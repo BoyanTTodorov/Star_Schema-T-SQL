@@ -28,9 +28,6 @@ This project focuses on transforming raw university data into a star schema usin
 - University data source in a compatible format (CSV, Excel, etc.).
 - Access to a SQL client for executing scripts.
 
-## Installation
 
-1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/your-username/university-data-transform.git
+
